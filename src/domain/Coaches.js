@@ -36,14 +36,15 @@ class Coaches {
    * @param {CategoryGenerator} categoryGenerator
    * @param {MenuGenerator} menuGenerator
    */
-  recommendMenus(categoryGenerator, menuGenerator) {
+  recommendWeeklyMenus(categoryGenerator, menuGenerator) {
     /**
      * @type {string[]}
      */
     const categories = [];
     while (categories.length < 5) {
+      // 카테고리 뽑기
       const category = this.pickNextCategory(categoryGenerator, categories);
-      // menu recommend
+      categories.push(category);
       this.recommendDailyMenus(category, menuGenerator);
     }
   }
@@ -51,8 +52,8 @@ class Coaches {
   /**
    * @param {string} category
    * @param menuGenerator
+   * @description 한 요일의 모든 코치에게 메뉴 추천
    */
-
   recommendDailyMenus(category, menuGenerator) {
     for (const coach of this.#coaches) {
       coach.recommendMenu(category, menuGenerator);
@@ -63,12 +64,14 @@ class Coaches {
    * @param {CategoryGenerator} categoryGenerator
    * @param {string[]} categories
    * @return {string}
+   * @description 카테고리가 중복이면 재추첨을 위한 메서드
    */
   pickNextCategory(categoryGenerator, categories) {
-    const category = categoryGenerator.generate();
-    const canRecommendCategory =
+    const category = categoryGenerator.generate(); // 카테고리 뽑기
+    // 카테고리 중복이면 다시 뽑기
+    const cannotRecommendCategory =
       categories.filter((c) => c === category).length >= 2;
-    if (!canRecommendCategory) {
+    if (cannotRecommendCategory) {
       return this.pickNextCategory(categoryGenerator, categories);
     }
     return category;
