@@ -30,15 +30,22 @@ class Coach {
   }
 
   /**
+   * @return {MenuItem[]}
+   */
+  get recommendedMenus() {
+    return this.#recommendedMenus;
+  }
+
+  /**
    * @param {string} category
    * @param {MenuGenerator} menuGenerator
    * @return {void}
    */
   recommendMenu(category, menuGenerator) {
     const menuItem = menuGenerator.generateByCategory(category);
-    // 1. 못먹는 메뉴임
+    // 1. 못먹는 메뉴에 존재하면 -> 다시
     const cannotEat = this.#refusedMenus.some((m) => m.name === menuItem.name);
-    // 2. 중복된 메뉴임
+    // 2. 이미 추천 메뉴에 존재하면(중복) -> 다시
     const alreadyRecommended = this.#recommendedMenus.some(
       (m) => m.name === menuItem.name,
     );
