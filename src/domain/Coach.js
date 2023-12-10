@@ -1,3 +1,5 @@
+import CoachDto from "./dto/CoachDto.js";
+
 const MIN_NAME_LEN = 2;
 const MAX_NAME_LEN = 4;
 
@@ -36,6 +38,8 @@ class Coach {
     return this.#recommendedMenus;
   }
 
+  // [].some - one of them returns true
+  // [].every - every of them returns true
   /**
    * @param {string} category
    * @param {MenuGenerator} menuGenerator
@@ -70,6 +74,14 @@ class Coach {
         `[ERROR] 이름의 길이는 최소 ${MIN_NAME_LEN}이상 ${MAX_NAME_LEN}이하여야합니다.`,
       );
     }
+  }
+
+  /**
+   * @return {CoachDto}
+   */
+  toCoachDto() {
+    const menuDtos = this.#recommendedMenus.map((m) => m.toMenuDto());
+    return new CoachDto(this.#name, menuDtos);
   }
 }
 
