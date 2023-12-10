@@ -61,7 +61,7 @@ class Menu {
    * @param {string} category
    * @return {MenuItem[]}
    */
-  static findMenusByCategory(category) {
+  static findMenuNamesByCategory(category) {
     return Menu.ITEMS.filter((menuItem) => menuItem.category === category);
   }
 }
