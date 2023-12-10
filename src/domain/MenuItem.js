@@ -1,3 +1,5 @@
+import MenuDto from "./dto/MenuDto.js";
+
 class MenuItem {
   /**
    * @type {string}
@@ -30,6 +32,13 @@ class MenuItem {
    */
   get category() {
     return this.#category;
+  }
+
+  /**
+   * @return {MenuDto}
+   */
+  toMenuDto() {
+    return new MenuDto(this.#name);
   }
 }
 
