@@ -1,15 +1,28 @@
 import Coach from "./Coach.js";
+import CoachesDto from "./dto/CoachesDto.js";
 
 const MIN_COACH_LEN = 2;
 const MAX_COACH_LEN = 5;
 
 class Coaches {
+  /**
+   * @type {Coach[]}
+   */
   #coaches;
 
+  /**
+   * @type {string[]}
+   */
+  #weeklyCategories;
+
+  /**
+   * @param {string[]} names
+   */
   constructor(names) {
     const coaches = names.map((name) => new Coach(name));
     this.#validate(names);
     this.#coaches = coaches;
+    this.#weeklyCategories = [];
   }
 
   /**
@@ -40,11 +53,10 @@ class Coaches {
     /**
      * @type {string[]}
      */
-    const categories = [];
-    while (categories.length < 5) {
+    while (this.#weeklyCategories.length < 5) {
       // 카테고리 뽑기
-      const category = this.pickNextCategory(categoryGenerator, categories);
-      categories.push(category);
+      const category = this.pickNextCategory(categoryGenerator);
+      this.#weeklyCategories.push(category);
       this.recommendDailyMenus(category, menuGenerator);
     }
   }
@@ -62,19 +74,27 @@ class Coaches {
 
   /**
    * @param {CategoryGenerator} categoryGenerator
-   * @param {string[]} categories
    * @return {string}
    * @description 카테고리가 중복이면 재추첨을 위한 메서드
    */
-  pickNextCategory(categoryGenerator, categories) {
+  pickNextCategory(categoryGenerator) {
     const category = categoryGenerator.generate(); // 카테고리 뽑기
     // 카테고리 중복이면 다시 뽑기
     const cannotRecommendCategory =
-      categories.filter((c) => c === category).length >= 2;
+      this.#weeklyCategories.filter((c) => c === category).length >= 2;
     if (cannotRecommendCategory) {
-      return this.pickNextCategory(categoryGenerator, categories);
+      return this.pickNextCategory(categoryGenerator);
     }
     return category;
+  }
+
+  // Model
+  /**
+   * @return {CoachesDto}
+   */
+  toCoachesDto() {
+    const coachDtos = this.#coaches.map((c) => c.toCoachDto());
+    return new CoachesDto(this.#weeklyCategories, coachDtos);
   }
 }
 
