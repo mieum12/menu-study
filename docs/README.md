@@ -68,6 +68,11 @@
 - `Category` : 카테고리 enum을 static으로 만들고, CategoryGenerator에서 번호를 받아와서 해당 카테고리 이름을 리턴해주는 로직 포함
 - `MenuGenerator` : 카테고리에 해당되는 메뉴를 랜덤으로 하나를 뽑아주는 클래스
 - `Menu` : 메뉴 enum을 MenuItem 형식에 맞게 static으로 만들고, 카테고리별 메뉴들을 필터링해주는 로직 포함
+- `MenuItem` : 메뉴에 대해 {이름, 카테고리} 형식으로 저장하는 클래스
+- dto
+  - `CoachDto` : 코치 하나의 이름, 못먹는 메뉴, 추천메뉴를 갖고있는 dto 레코드
+  - `CoachesDto` : 전제 CoachDto 배열과 전체 카테고리를 갖고있는 dto 레코드
+  - `MenuDto` : 메뉴 하나에 대한 이름을 갖고있는 dto 레코드
 
 ## 📍 view
 
