@@ -10,7 +10,7 @@ class Controller {
     // 2.실행 - 메뉴 추천
     await this.recommendStart(coaches);
     // 3.출력 - 결과 출력
-    OutputView.printResults(coaches);
+    OutputView.printResults(coaches.toCoachesDto());
   }
 
   /**
