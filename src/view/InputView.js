@@ -36,7 +36,9 @@ class InputView {
    * @description 코치를 입력받는 곳
    */
   static async #inputCoaches() {
-    return await RetryHandler.handleRetry(this.#_inputCoaches);
+    return await RetryHandler.handleRetry(
+      async () => await this.#_inputCoaches(),
+    );
   }
 
   /**
